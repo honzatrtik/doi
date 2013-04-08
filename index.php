@@ -1,10 +1,11 @@
 <h1>Doi works!</h1>
-<hr /
+<hr />
+
 <pre>
 <?php
 
-var_export($_ENV);
-var_export($_SERVER);
+var_dump($_ENV);
+var_dump($_SERVER);
 
 
 ?>
