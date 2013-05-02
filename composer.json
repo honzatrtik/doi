@@ -1,5 +1,13 @@
 {
     "require": {
-	"silex/silex": "1.0.*@dev"
-    }
+		"silex/silex": "1.0.*@dev",
+		"phpunit/phpunit": "3.7.19",
+		"symfony/yaml": "2.1.*@dev",
+		"igorw/config-service-provider": "1.0.*@dev",
+		"tracy/tracy": "dev-master",
+		"doctrine/orm": "2.3.*@dev"
+    },
+	"autoload": {
+		"psr-0": {"": "src/"}
+	}
 }

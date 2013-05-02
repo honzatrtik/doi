@@ -1,0 +1,13 @@
+{
+	"log.dir": "%baseDir%/log",
+	"db.options":
+	{
+		"driver": "pdo_mysql",
+		"host": "127.0.0.1",
+		"dbname": "doi",
+		"user": "trta",
+		"password": "S-sound*82",
+		"charset": "utf8"
+	}
+
+}
