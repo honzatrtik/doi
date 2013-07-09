@@ -1,0 +1,9 @@
+{
+	"db.options":
+	{
+		"driver": "pdo_sqlite",
+		"path": "%baseDir%/data/test.sqlite"
+	},
+	"crossref.baseUrl": "http://test.crossref.org"
+
+}

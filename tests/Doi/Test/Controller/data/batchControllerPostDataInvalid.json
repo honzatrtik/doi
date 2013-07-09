@@ -1,0 +1,35 @@
+[
+	{
+		"isn": "0038-0288",
+		"issue": 5,
+		"volume": 42,
+		"year": 2012,
+		"articles":
+			[
+				{
+					"doi": "doi.number",
+					"title": "Article title",
+					"authors":
+						[
+							{
+								"name": "Miroslav",
+								"surname": "Hroch"
+							}
+						],
+					"page": 1340
+				},
+				{
+					"doi": "doi.number",
+					"title": "Another article title",
+					"authors":
+						[
+							{
+								"name": "Mila",
+								"surname": "Pergel"
+							}
+						],
+					"page": 1351
+				}
+			]
+	}
+]

@@ -1,11 +1,18 @@
 {
     "require": {
 		"silex/silex": "1.0.*@dev",
+		"symfony/browser-kit": "2.4.*@dev",
 		"phpunit/phpunit": "3.7.19",
 		"symfony/yaml": "2.1.*@dev",
 		"igorw/config-service-provider": "1.0.*@dev",
 		"tracy/tracy": "dev-master",
-		"doctrine/orm": "2.3.*@dev"
+		"dflydev/doctrine-orm-service-provider": "1.0.*@dev",
+		"doctrine/data-fixtures": "1.0.*@dev",
+		"respect/validation": "0.4.4",
+		"guzzle/http": "v3.6.0",
+		"monolog/monolog": "1.5.0",
+		"cowlby/php-loggly-bindings": "*",
+		"cowlby/monologgly": "dev-master"
     },
 	"autoload": {
 		"psr-0": {"": "src/"}

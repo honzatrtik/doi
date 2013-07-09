@@ -1,8 +1,11 @@
 composer.phar
+composer.lock
 .elasticbeanstalk/
+.ebextensions/
 .idea
 vendor/*
 vendor/
 vendor
 log/*
 config/local.json
+.DS_Store

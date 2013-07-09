@@ -1,12 +1,19 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
+$loader = require_once __DIR__.'/autoload.php';
 
 $app = new Silex\Application();
 
+if (!defined('ENVIRONMENT'))
+{
+	$environment = isset($_SERVER['ENVIRONMENT']) ? $_SERVER['ENVIRONMENT'] : 'devel';
+	define('ENVIRONMENT', $environment);
+}
 
-define('ENVIRONMENT', defined('ENVIRONMENT') ? ENVIRONMENT : 'devel');
-define('BASE_DIR', __DIR__);
+if (!defined('BASE_DIR'))
+{
+	define('BASE_DIR', __DIR__);
+}
 
 // Globalni konfigurace
 $replacements = array(
@@ -23,11 +30,26 @@ if (is_readable($environmentConfig))
 	$app->register(new Igorw\Silex\ConfigServiceProvider($environmentConfig, $replacements));
 }
 
-\Tracy\Debugger::enable(NULL, $app['log.dir']);
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+$app['url_generator']->setStrictRequirements(false);
 
 
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+	'monolog.logfile' => __DIR__.'/log/access.log',
+	'monolog.name' => 'doi',
+));
+$app['monolog'] = $app->share($app->extend('monolog', function($monolog, $app) {
+    return $monolog;
+}));
+
+
+$app->register(new Silex\Provider\ServiceControllerServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider(), $app['db.options']);
 
+$doctrineOrmServiceProvider = new \Dflydev\Pimple\Provider\DoctrineOrm\DoctrineOrmServiceProvider();
+$doctrineOrmServiceProvider->register($app);
+
+require __DIR__ . '/services.php';
 
 return $app;
 

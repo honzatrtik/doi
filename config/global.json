@@ -5,9 +5,23 @@
 		"driver": "pdo_mysql",
 		"host": "127.0.0.1",
 		"dbname": "doi",
-		"user": "trta",
-		"password": "S-sound*82",
 		"charset": "utf8"
-	}
+	},
 
+	"orm.proxies_dir": "%baseDir%/src/proxies",
+	"orm.auto_generate_proxies": true,
+	"orm.em.options":
+	{
+		"mappings":
+		[
+			{
+				"type": "annotation",
+				"namespace": "Doi\\Entity",
+				"path": "%baseDir%/src/Doi/Entity"
+			}
+		]
+
+	},
+	"doi.prefix": "10.13060",
+	"crossref.baseUrl": "http://doi.crossref.org"
 }

@@ -13,7 +13,7 @@ namespace Doi\Entity;
  * Class DoiRequest
  *
  * @package Doi\Entity
- * @Entity @Table(name="doiRequest")
+ * @Entity @Table(name="doiRequest", indexes={@Index(name="doiRequest_type_idx", columns={"type"})})
  */
 class DoiRequest
 {
@@ -32,10 +32,10 @@ class DoiRequest
 	protected $doiRequestId;
 
 	/**
-	 * @var int
-	 * @Column(type="integer")
+	 * @var Doi
+	 * @oneToOne(targetEntity="Doi", mappedBy="doiRequest", cascade="persist")
 	 */
-	protected $doiId;
+	protected $doi;
 
 	/**
 	 * @var string
@@ -51,13 +51,13 @@ class DoiRequest
 
 	/**
 	 * @var int
-	 * @Column(type="integer")
+	 * @Column(type="integer", nullable=true)
 	 */
 	protected $issue;
 
 	/**
 	 * @var int
-	 * @Column(type="integer")
+	 * @Column(type="integer", nullable=true)
 	 */
 	protected $volume;
 
@@ -107,6 +107,18 @@ class DoiRequest
 	public function getIsn()
 	{
 		return $this->isn;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getIsnAsNumber()
+	{
+		$isn = $this->isn;
+		$isn = trim($isn);
+		$isn = preg_replace('/^\s*(issn|isbn)\s*/i', '', $isn);
+		$isn = preg_replace('/\s*-\s*/', '', $isn);
+		return $isn;
 	}
 
 	/**
@@ -160,6 +172,26 @@ class DoiRequest
 	{
 		return $this->volume;
 	}
+
+	/**
+	 * @param \Doi\Entity\Doi $doi
+	 */
+	public function setDoi(Doi $doi)
+	{
+		$this->doi = $doi;
+		$this->doi->setDoiRequest($this);
+	}
+
+	/**
+	 * @return \Doi\Entity\Doi
+	 */
+	public function getDoi()
+	{
+		return $this->doi;
+	}
+
+
+
 
 
 

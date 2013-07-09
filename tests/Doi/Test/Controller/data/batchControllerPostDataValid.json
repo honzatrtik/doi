@@ -1,0 +1,29 @@
+[
+	{
+		"type": "journal",
+		"isn": "0038-0288",
+		"issue": 5,
+		"volume": 42,
+		"year": 2012,
+		"articles":
+			[
+				{
+					"doi": "10.13060/issn.12144029.4.1.1",
+					"title": "Article title",
+					"url": "http://someurl.cz/article",
+					"authors":
+						[
+							{
+								"name": "Miroslav",
+								"surname": "Hroch"
+							},
+							{
+								"name": "Mila",
+								"surname": "Pergel"
+							}
+						],
+					"page": 1340
+				}
+			]
+	}
+]
