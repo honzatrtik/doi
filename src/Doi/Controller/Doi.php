@@ -41,23 +41,24 @@ class Doi
 	 * @return Entity\Doi
 	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
 	 */
-	public function findDoiByDoi($doi)
+	protected function findDoiByDoi($doi)
 	{
-		if (!$doi = $this->em->getRepository('\Doi\Entity\Doi')->findByDoi($doi))
+		if (!$doiEntity = $this->em->getRepository('\Doi\Entity\Doi')->findByDoi($doi))
 		{
 			throw new HttpException(404, 'Doi not found: ' . $doi);
 		}
-		return $doi;
+		return $doiEntity;
 	}
 
 
-	public function getDoi(Application $app, Request $request, Entity\Doi $doi)
+	public function get(Application $app, Request $request, $doi)
 	{
 
+		$doi = $this->findDoiByDoi($doi);
 
 		return $app->json(array(
 			'doi' => $doi->getDoi(),
-			'url' => $app['url_generator']->generate('doi_get_doi', array(
+			'url' => $app['url_generator']->generate('doi.get', array(
 				'doi' => $doi->getDoi(),
 			)),
 			'status'=> $doi->getStatusAsText(),
@@ -69,7 +70,7 @@ class Doi
 			'reservedBy' => $doi->getUser()
 				? $doi->getUser()->getUsername()
 				: NULL,
-			'batchesUrl' =>  $app['url_generator']->generate('batch_get_batches_by_doi', array(
+			'batchesUrl' =>  $app['url_generator']->generate('batch.getAllByDoi', array(
 				'doi' => $doi->getDoi()
 			))
 		));
@@ -114,15 +115,16 @@ class Doi
 
 		return $app->json(array(
 			'doi' => $doi->getDoi(),
-			'url' => $app['url_generator']->generate('doi_get_doi', array(
+			'url' => $app['url_generator']->generate('doi.get', array(
 				'doi' => $doi->getDoi(),
 			))
 		), 201);
 	}
 
 
-	public function deleteDoi(Application $app, Request $request, Entity\Doi $doi)
+	public function delete(Application $app, Request $request, $doi)
 	{
+		$doi = $this->findDoiByDoi($doi);
 		if ($doi->getStatus() == Entity\Doi::STATUS_RESERVED)
 		{
 			$this->em->remove($doi);

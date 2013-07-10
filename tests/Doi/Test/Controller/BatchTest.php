@@ -26,9 +26,8 @@ class BatchTest extends WebTestCase
 
 		$app->post('/batch', 'controller:post');
 
-		$app->get('/batch/{batch}', 'controller:getBatch')
-			->bind('batch_get_batch')
-			->convert('batch', array($controller, 'findBatchByBatchId'));
+		$app->get('/batch/{batch}', 'controller:get')
+			->bind('batch.get');
 
 		return $app;
 	}

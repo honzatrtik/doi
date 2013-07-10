@@ -51,7 +51,7 @@ class Batch
 	 * @return Entity\Batch
 	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
 	 */
-	public function findBatchByBatchId($batchId)
+	protected function findBatchByBatchId($batchId)
 	{
 		if (!$batch = $this->em->getRepository('\Doi\Entity\Batch')->findFull($batchId))
 		{
@@ -162,15 +162,17 @@ class Batch
 
 		return $app->json(array(
 			'doi' => $batch->getBatchId(),
-			'url' => $app['url_generator']->generate('batch_get_batch', array(
+			'url' => $app['url_generator']->generate('batch.get', array(
 				'batch' => $batch->getBatchId(),
 			))
 		), 201);
 
 	}
 
-	public function getBatch(Application $app, Request $request, Entity\Batch $batch)
+	public function get(Application $app, Request $request, $batchId)
 	{
+
+		$batch = $this->findBatchByBatchId($batchId);
 
 		$result = array();
 		foreach($batch->getBatchArticles() as $batchArticle)
@@ -185,7 +187,7 @@ class Batch
 
 		return $app->json(array(
 			'batchId' => $batch->getBatchId(),
-			'url' => $app['url_generator']->generate('batch_get_batch', array(
+			'url' => $app['url_generator']->generate('batch.get', array(
 				'batch' => $batch->getBatchId(),
 			)),
 			'submittedBy' => $batch->getSubmittedBy()->getUsername(),
@@ -196,7 +198,7 @@ class Batch
 		), 200);
 	}
 
-	public function getBatchesByDoi(Application $app, Request $request, $doi)
+	public function getAllByDoi(Application $app, Request $request, $doi)
 	{
 		/** @var DoiRepository $doiRepository */
 		$doiRepository = $this->em->getRepository('Doi\Entity\Doi');
@@ -210,7 +212,7 @@ class Batch
 		foreach($repository->findByDoi($doi->getDoi()) as $batch)
 		{
 			$batches[] = array(
-				'url' => $app['url_generator']->generate('batch_get_batch', array(
+				'url' => $app['url_generator']->generate('batch.get', array(
 					'batch' => $batch->getBatchId(),
 				)),
 				'submittedBy' => $batch->getSubmittedBy()->getUsername(),
@@ -222,7 +224,7 @@ class Batch
 
 		return $app->json(array(
 			'doi' => $doi->getDoi(),
-			'url' => $app['url_generator']->generate('batch_get_batches_by_doi', array(
+			'url' => $app['url_generator']->generate('batch.getAllByDoi', array(
 				'doi' => $doi->getDoi(),
 			)),
 			'batches' => $batches,

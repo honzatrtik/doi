@@ -20,22 +20,16 @@ class DoiTest extends WebTestCase
 		$app['controller'] = $controller = new Doi($app['orm.em'], $app['doi.factory']);
 
 		$app->post('/doi', 'controller:post');
-		$app->get('/doi/{doi}', 'controller:getDoi')
-			->bind('doi_get_doi')
-			->assert('doi', $controller::DOI_PATTERN_REGEX)
-			->convert('doi', array($controller, 'findDoiByDoi'));
 
-		$app->delete('/doi/{doi}', 'controller:deleteDoi')
-			->assert('doi', $controller::DOI_PATTERN_REGEX)
-			->convert('doi', array($controller, 'findDoiByDoi'));
+		$app->get('/doi/{doi}', 'controller:get')
+			->bind('doi.get')
+			->assert('doi', $controller::DOI_PATTERN_REGEX);
 
-		$app->get('/doi', 'controller:get')
-			->bind('doi_get')
-			->assert('doi', $controller::DOI_PATTERN_REGEX)
-			->convert('doi', array($controller, 'findDoiByDoi'));
+		$app->delete('/doi/{doi}', 'controller:delete')
+			->assert('doi', $controller::DOI_PATTERN_REGEX);
 
 		$app->get('/batch/{doi}/batches', function() {})
-			->bind('batch_get_batches_by_doi');
+			->bind('batch.getAllByDoi');
 
 		return $app;
 	}
@@ -147,7 +141,7 @@ class DoiTest extends WebTestCase
 		$json = $response->getJson();
 
 		$response = $this->request('GET', $json['url']);
-		$json = $response->getJson();var_dump($json);
+		$json = $response->getJson();
 		$this->assertEquals(200, $response->getStatusCode());
 
 		$keys = array(
