@@ -163,7 +163,7 @@ class Batch
 		return $app->json(array(
 			'doi' => $batch->getBatchId(),
 			'url' => $app['url_generator']->generate('batch.get', array(
-				'batch' => $batch->getBatchId(),
+				'batchId' => $batch->getBatchId(),
 			))
 		), 201);
 
@@ -188,7 +188,7 @@ class Batch
 		return $app->json(array(
 			'batchId' => $batch->getBatchId(),
 			'url' => $app['url_generator']->generate('batch.get', array(
-				'batch' => $batch->getBatchId(),
+				'batchId' => $batch->getBatchId(),
 			)),
 			'submittedBy' => $batch->getSubmittedBy()->getUsername(),
 			'submitted'=> $batch->getCreated(),

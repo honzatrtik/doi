@@ -1,7 +1,6 @@
 composer.phar
 composer.lock
 .elasticbeanstalk/
-.ebextensions/
 .idea
 vendor/*
 vendor/
